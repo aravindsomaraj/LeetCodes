@@ -1,36 +1,29 @@
 class Solution {
 public:
-    void Solve(vector<string>& a, string s, int n, int i)
+    void Solve(int n, string s, int i, int j, vector<string>& ans)
     {
         if(i==n)
         {
-            while(s.size()!=(2*n))
+            while(s.size()!=2*n)
             {
-                s=s+")";
+                s = s + ")";
             }
-            a.push_back(s);
-            return ;
+            ans.push_back(s);
+            return;
         }
-                  
-        s = s + "(";
-    
-        Solve(a,s,n,i+1);
-                  
-        s.pop_back();
-        
-        if(2*i == s.size())
+        if(j>i)
             return ;
-        s = s + ")";
         
-        Solve(a,s,n,i);
-            
+        Solve(n,s+"(",i+1,j,ans);
+        Solve(n,s+")",i,j+1,ans);
+        
+        
     }
     vector<string> generateParenthesis(int n) {
         
-        vector<string> a;
-        Solve(a,"",n,0);
-        
-        return a;
+        vector<string> ans;
+        Solve(n,"",0,0,ans);
+        return ans;
         
     }
 };
