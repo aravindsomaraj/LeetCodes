@@ -9,26 +9,14 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        
-        if(head==NULL)
+
+        if(head==0)
             return false;
-        if(head->next==NULL)
-            return false;
-        int k=0;
-        head->val = 100001+k;
-        k++;
-        do
-        {
-            head->val = 100001+k;
-            ListNode *temp = head->next;
-            head->next=NULL;
-            head=temp;
-            k++;
-        }while(head->next!=NULL);
         
-        if(head->val > 100000)
+        if(head->val==100001)
             return true;
-        return false;
+        head->val=100001;
+        return hasCycle(head->next); 
         
     }
 };
