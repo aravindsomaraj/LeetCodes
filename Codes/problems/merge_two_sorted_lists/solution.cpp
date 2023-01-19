@@ -10,58 +10,25 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if(list1==0 && list2==0)
-            return 0;
-        // ListNode* curr = list1;
-        // ListNode* curr2 = list2;
-        ListNode* a = new ListNode(0);
-        ListNode* curr = new ListNode();
-        ListNode* prev = new ListNode();
-        a->next = curr;
-        while(list1!=NULL && list2!=NULL)
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+
+        ListNode* curr=0;
+        if(a==0)
+            return b;
+        if(b==0)
+            return a;
+        
+        if(a->val < b->val)
         {
-            // curr = new ListNode(0);
-            // if(a->next==NULL)
-            //     a->next=curr;
-            if(list1->val < list2->val)
-            {
-                if(curr==NULL)
-                    cout << "blah";
-                curr->val = list1->val;
-                list1=list1->next;
-            }
-            else
-            {
-                curr->val = list2->val;
-                list2=list2->next;
-            }
-            prev=curr;
-            ListNode *newnode = new ListNode();
-            curr->next=newnode;
-            curr=curr->next;
+            curr=a;
+            curr->next=mergeTwoLists(a->next,b);
         }
-        while(list1!=NULL)
+        else
         {
-            // curr = new ListNode(0);
-            prev=curr;
-            curr->val = list1->val;
-            list1=list1->next;
-            ListNode *newnode = new ListNode();
-            curr->next=newnode;
-            curr=curr->next;
+            curr=b;
+            curr->next=mergeTwoLists(a,b->next);
         }
-        while(list2!=NULL)
-        {
-            // curr = new ListNode(0);
-            prev=curr;
-            curr->val = list2->val;
-            list2=list2->next;
-            ListNode *newnode = new ListNode();
-            curr->next=newnode;
-            curr=curr->next;
-        }
-        prev->next=NULL;
-        return a->next;
+        
+        return curr;
     }
 };
