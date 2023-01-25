@@ -1,71 +1,35 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        
-        vector<vector<int>> ind;
-        vector<int> ans;
-        
-        int m = matrix.size();
-        int n = matrix[0].size();
-        int f=0;
-        int u=0,d=m,l=0,r=n;
-        int i=0,j=0;
-        
-        
-        while(i>=u&&i<d&&j>=l&&j<r)
-        {
-            switch(f%4)
-            {
-                case 0: while(j<r)
-                        {
-                            ind.push_back({i,j});
-                            j++;
-                        }
-                        j--;
-                        u+=1;
-                        i++;
-                        f+=1;
-                        break;
-                case 1: while(i<d)
-                        {
-                            ind.push_back({i,j});
-                            i++;
-                        }
-                        i--;
-                        r-=1;
-                        j--;
-                        f+=1;
-                        break;
-                case 2: while(j>=l)
-                        {
-                            ind.push_back({i,j});
-                            j--;
-                        }
-                        j++;
-                        d-=1;
-                        i--;
-                        f+=1;
-                        break;
-                case 3: while(i>=u)
-                        {
-                            ind.push_back({i,j});
-                            i--;
-                        }
-                        i++;
-                        l+=1;
-                        j++;
-                        f+=1;
-                        break;
 
-            }
-            
-        }
-        
-        for(i=0; i<(m*n); i++)
+        int m=matrix.size();int n=matrix[0].size();
+        int l=0,r=n-1,u=0,d=m-1;
+        int dir=0;int i=0,j=0;
+        vector<int> ans;
+        while(l<=r&&u<=d)
         {
-            ans.push_back(matrix[ind[i][0]][ind[i][1]]);
+            if(dir%4==0)
+            {
+                for(j=l;j<=r;j++)   ans.push_back(matrix[u][j]);
+                u++;
+            }
+            else if(dir%4==1)
+            {
+                for(i=u;i<=d;i++)   ans.push_back(matrix[i][r]);
+                r--;
+            }
+            else if(dir%4==2)
+            {
+                for(j=r;j>=l;j--)   ans.push_back(matrix[d][j]);
+                d--;
+            }
+            else if(dir%4==3)
+            {
+                for(i=d;i>=u;i--)   ans.push_back(matrix[i][l]);
+                l++;
+            }
+            dir++;
         }
-        
         return ans;
     }
 };
