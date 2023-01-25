@@ -2,33 +2,28 @@ class Solution {
 public:
     string Solve(string s)
     {
-        string str="";
-        char num=s[0]; 
         char count='0';
-        for(int i=0; s[i]!='\0';i++)
+        char ch=s[0];string ans="";
+        for(int i=0;s[i]!='\0';i++)
         {
-            if(s[i]!=num)
+            if(s[i]!=ch)
             {
-                str = str + count + num;
-                num = s[i];
-                count = '1';
+                ans=ans+count+ch;
+                ch=s[i];
+                count='1';
             }
             else
-            {
-                count = count + 1;
-            }
+                count=count+1;
         }
-        str = str + count + num;
-        return str;
+        ans=ans+count+ch;
+        return ans;
     }
     string countAndSay(int n) {
-        
-        string ans="1";
+        string s="1";
         for(int i=1;i<n;i++)
         {
-            ans = Solve(ans);
+            s=Solve(s);
         }
-        
-        return ans;
+        return s;
     }
 };
