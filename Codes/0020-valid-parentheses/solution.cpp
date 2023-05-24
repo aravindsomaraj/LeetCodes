@@ -2,15 +2,16 @@ class Solution {
 public:
     bool isValid(string s) {
 
-        unordered_map<char,char> mp {{'(',')'},{'[',']'},{'{','}'}};
+        unordered_map<char,char> mp = {{'{','}'}, {'(',')'}, {'[',']'}};
         stack<char> st;
-        for(char& ch:s)
+
+        for(int i=0;i<s.size();i++)
         {
-            if(mp.find(ch)!=mp.end())
-                st.push(ch);
+            if(s[i]=='(' || s[i]=='[' || s[i]=='{')
+                st.push(s[i]);
             else
             {
-                if(st.empty() || ch!=mp[st.top()])
+                if(st.empty() || mp[st.top()] != s[i])
                     return false;
                 st.pop();
             }
