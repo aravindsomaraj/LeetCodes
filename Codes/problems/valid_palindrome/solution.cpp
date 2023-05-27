@@ -1,43 +1,17 @@
 class Solution {
 public:
-    bool isChar(string& s, int i, char ch)
-    {
-        bool p=false;
-        if(ch>='A' && ch<='Z')
-        {
-            s[i]=s[i]+32;
-            p=true;
-        }
-        if(ch>='a' && ch<='z')
-        {
-            p=true;
-        }
-        return p;
-    }
-    bool isNum(string& s, int i, char ch)
-    {
-        bool p=false;
-        if(ch>='0' && ch<='9')
-        {
-            p=true;
-        }
-        return p;
-    }
     bool isPalindrome(string s) {
-        
-        int n = s.size();
-        string str;
-        for(int i=0; s[i]!='\0'; i++)
+
+        string newS="";
+        for(int i=0;i<s.size();i++)
         {
-            if(isChar(s,i,s[i]) || isNum(s,i,s[i]))
-                str+=s[i];
+            if((s[i]>='A' && s[i]<='Z') || (s[i]>='a' && s[i]<='z') || isdigit(s[i]))
+                newS+=tolower(s[i]);
         }
-        cout << str;
-        string newstr = str;
-        reverse(str.begin(),str.end());
-        if(newstr==str)
+        string temp = newS;
+        reverse(newS.begin(),newS.end());
+        if(temp == newS)
             return true;
         return false;
-        
     }
 };
