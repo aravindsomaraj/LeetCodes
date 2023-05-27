@@ -1,21 +1,14 @@
 class Solution {
 public:
-    int singleNumber(vector<int>& nums) {
+    int singleNumber(vector<int>& arr) {
+        int n = arr.size(); // extracting the size of the array
         
-        int n = nums.size();
-        
-        unordered_map<int,int> mp;
-        
-        for(int i=0; i<n; i++)
+        // traverse from the array
+        for(int i = 0; i < n - 1; i++)
         {
-            mp[nums[i]]++;
+            arr[i + 1] = arr[i] ^ arr[i + 1]; // (prev answer xor current index)
         }
         
-        for(auto it=mp.begin();it!=mp.end(); it++)
-        {
-            if(it->second==1)
-                return it->first;
-        }
-        return -1;
+        return arr[n- 1]; // return left over element
     }
 };
