@@ -2,21 +2,19 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
 
-        unordered_map<char,int> mp;
-        int maxl=0,curr=0,start=0;
-        for(int i=0;i<s.size();i++)
+        vector<int> v (256,0);
+        int start=-1,len=0,maxlen=0;int i=0;
+        for(;s[i]!='\0';i++)
         {
-            mp[s[i]]++;
-            curr++;
-            while(mp[s[i]]>1)
-            {
-                // maxl=max(maxl,i-start);
-                mp[s[start++]]--;
-                curr--;
+            v[s[i]]++;
+            if(v[s[i]]>1) {
+                maxlen = max(maxlen,i-start-1);
+                while(v[s[i]]>1)
+                {
+                    start++;v[s[start]]--;
+                }
             }
-            cout << curr << endl;
-            maxl=max(maxl,curr);
         }
-        return maxl;
+        return max(maxlen,i-1-start);
     }
 };
