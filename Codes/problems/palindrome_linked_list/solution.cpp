@@ -11,40 +11,17 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        
-        if(head->next==NULL)
-            return true;
-        ListNode* curr = head;
-        stack<int> sp;
-        int c=0;
-        while(curr!=0)
+        deque<int> d;
+        while(head)
         {
-            c++;
-            curr=curr->next;
+            d.push_back(head->val);
+            head=head->next;
         }
-        
-        int m = (c+1)/2;
-        curr=head;
-        int k=1;
-        while(k<=m)
+        while(!d.empty() && d.front()==d.back())
         {
-            sp.push(curr->val);
-            curr=curr->next;
-            k++;
+            d.pop_front();
+            if(!d.empty()) d.pop_back();
         }
-        if(c%2!=0)
-        {
-            sp.pop();
-        }
-        while(!sp.empty())
-        {
-            if(curr->val!=sp.top())
-                return false;
-            curr=curr->next;
-            cout << sp.top();
-            sp.pop();
-        }
-        
-        return sp.empty();
+        return d.empty();
     }
 };
