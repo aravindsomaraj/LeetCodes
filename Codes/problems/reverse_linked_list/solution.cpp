@@ -10,29 +10,26 @@
  */
 class Solution {
 public:
+    void Solve(ListNode* node)
+    {
+        if(!node->next)
+            return;
+        
+        Solve(node->next);
+        node->next->next = node;
+        // node->next = NULL;
+
+    }
     ListNode* reverseList(ListNode* head) {
         
-        // ListNode* s = head;
-        if(head==NULL || head->next==NULL)
-            return head;
-        
-        
-        ListNode* curr = head->next;
-        ListNode* nextCurr = curr->next;
-        
-        head->next=NULL;
-        
-        while(nextCurr!=NULL)
-        {
-            curr->next = head;
-            head=curr;
-            curr=nextCurr;
-            nextCurr=nextCurr->next;
-        }
-        
-        curr->next=head;
-        cout << curr->val << curr->next->val;
-        return curr;
-        
+        if(!head)
+            return NULL;
+        ListNode* curr = head;
+        while(curr->next)
+            curr = curr->next;
+        ListNode* a = new ListNode(0,curr);
+        Solve(head);
+        head->next=0;
+        return a->next;
     }
 };
