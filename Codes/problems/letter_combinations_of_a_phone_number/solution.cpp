@@ -1,15 +1,20 @@
 class Solution {
 public:
-    unordered_map<int,vector<string>> mp;
-    vector<string> Solve(string& s, int i)
+    unordered_map<char,string> mp;
+    vector<string> Solve(string s,int i)
     {
-        if(i==s.size())
-            return {};
         if(i==s.size()-1)
-            return mp[s[i]];
+        {
+            vector<string> v;
+            for(char& ch:mp[s[i]])
+                v.push_back(string(1,ch));
+            return v;
+        }
 
         vector<string> temp = Solve(s,i+1);
-        vector<string> res  = mp[s[i]];
+        vector<string> res;
+        for(char& ch:mp[s[i]])
+                res.push_back(string(1,ch));
         vector<string> ans;
         for(int i=0;i<temp.size();i++)
         {
@@ -22,15 +27,16 @@ public:
     }
     vector<string> letterCombinations(string digits) {
 
-        mp['2']={"a","b","c"};
-        mp['3']={"d","e","f"};
-        mp['4']={"g","h","i"};
-        mp['5']={"j","k","l"};
-        mp['6']={"m","n","o"};
-        mp['7']={"p","q","r","s"};
-        mp['8']={"t","u","v"};
-        mp['9']={"w","x","y","z"};
-
+        if(digits=="")
+            return {};
+        mp['2']="abc";
+        mp['3']="def";
+        mp['4']="ghi";
+        mp['5']="jkl";
+        mp['6']="mno";
+        mp['7']="pqrs";
+        mp['8']="tuv";
+        mp['9']="wxyz";
         return Solve(digits,0);
     }
 };
