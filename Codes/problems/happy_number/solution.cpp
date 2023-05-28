@@ -1,31 +1,26 @@
 class Solution {
 public:
-    bool Rep(int n, unordered_map<int,int>& mp)
+    int New(int n)
     {
+        int new_n = 0;
+        while(n!=0)
+        {
+            new_n += pow(n%10,2);
+            n /= 10;
+        }
+        return new_n;
+    }
+    bool isHappy(int n) {
+
         if(n==1)
             return true;
         
-        if(mp[n]==1)
+        int slow = n, fast = New(n);
+        while(slow!=fast)
         {
-            return false;
+            slow = New(slow);
+            fast = New(New(fast));
         }
-        mp[n]=1;
-        int num=0;
-        while(n)
-        {
-            
-            int d = n%10;
-            num = num + d*d;
-            n/=10;
-        }
-        // cout << num << " ";
-        return Rep(num,mp);
-    }
-    bool isHappy(int n) {
-        
-        unordered_map<int,int> mp;
-        return Rep(n,mp);
-        
-        
+        return slow == 1;
     }
 };
