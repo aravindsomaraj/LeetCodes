@@ -12,12 +12,13 @@ public:
             {
                 if(board[i][j]=='.')
                     continue;
-                int n = board[i][j]-48;n=n-1;
-                if(row[n][i] || col[n][j] || blk[n][(i/3)+3*(j/3)])
-                    return false;
-                    
-                row[n][i]=1;col[n][j]=1;blk[n][(i/3)+3*(j/3)]=1;
                 
+                int n=board[i][j]-'1';
+
+                if(row[n][i] || col[n][j] || blk[n][(j/3+3*(i/3))])
+                    return false;
+                
+                row[n][i] = col[n][j] = blk[n][(j/3+3*(i/3))] = 1;
             }
         }
         return true;
