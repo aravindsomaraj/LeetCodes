@@ -11,54 +11,26 @@
  */
 class Solution {
 public:
-    void Solve(queue<TreeNode*> fr, vector<vector<int>>& res)
-    {
-        if(fr.empty())
-            return;
-        
-        queue<TreeNode*> newfr;
-        vector<int> tmp;
-        
-        while(!fr.empty())
-        {
-            TreeNode* curr = fr.front();
-            fr.pop();
-            if(curr->left)
-            {
-                newfr.push(curr->left);
-                tmp.push_back(curr->left->val);
-            }
-            if(curr->right)
-            {
-                newfr.push(curr->right);
-                tmp.push_back(curr->right->val);
-            }
-        }
-        
-        
-        if(!tmp.empty())
-            res.push_back(tmp);
-        
-        Solve(newfr,res);
-        
-        
-    }
+    vector<vector<int>> ans;
     vector<vector<int>> levelOrder(TreeNode* root) {
-        
-        vector<vector<int>> res;
-        vector<int> tmp;
-        queue<TreeNode*> newfr;
-        
-        if(root!=NULL)
+        list<TreeNode*> ll;
+        list<TreeNode*> LL;
+        if(root) ll.push_back(root);
+        while(!ll.empty())
         {
-            tmp.push_back(root->val);
-            res.push_back(tmp);
-            newfr.push(root);
+            vector<int> res;
+            for(auto& i: ll) res.push_back(i->val);
+            ans.push_back(res);
+            while(!ll.empty())
+            {
+                TreeNode* node = ll.front();
+                if(node->left) LL.push_back(node->left);
+                if(node->right) LL.push_back(node->right);
+                ll.pop_front();
+            }
+            ll=LL;
+            LL.clear();
         }
-        
-        Solve(newfr,res);
-        
-        return res;
-        
+        return ans;
     }
 };
