@@ -5,8 +5,7 @@ public:
     {
         if(i==nums.size())
         {
-            ans.push_back(res);
-            return;
+            ans.push_back(res); return;
         }
 
         Solve(nums,i+1,res);
@@ -14,7 +13,6 @@ public:
         Solve(nums,i+1,res);
     }
     vector<vector<int>> subsets(vector<int>& nums) {
-
         Solve(nums,0,{});
         return ans;
     }
