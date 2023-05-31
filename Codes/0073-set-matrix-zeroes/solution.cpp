@@ -1,34 +1,19 @@
 class Solution {
 public:
-    void Solve(vector<vector<int>>& m, int i, int j)
-    {
-        if(i==m.size() || j==m[0].size())
-            return;
-        
-        int f=0;
-        if(!m[i][j])
-            f=1;
-        
-        if(j==m[0].size()-1)
-            Solve(m,i+1,0);
-        else
-            Solve(m,i,j+1);
-
-        if(f==1)
-        {
-            for(int k=0;k<m.size();k++)
-            {
-                m[k][j]=0;
-            }
-            for(int k=0;k<m[0].size();k++)
-            {
-                m[i][k]=0;
-            }
-        }
-    }
     void setZeroes(vector<vector<int>>& matrix) {
+        int m=matrix.size();
+        int n=matrix[0].size();
+        int col=1,row=1;
+        for(int i=0;i<m;i++) if(!matrix[i][0]) { col=0;break;}
+        for(int j=0;j<n;j++) if(!matrix[0][j]) { row=0;break;}
 
-        Solve(matrix,0,0);
+        for(int i=1;i<m;i++) for(int j=1;j<n;j++)
+            if(!matrix[i][j]) matrix[i][0] = matrix[0][j] = 0; 
         
+        for(int i=1;i<m;i++) for(int j=1;j<n;j++)
+            if(!matrix[i][0] || !matrix[0][j]) { matrix[i][j] = 0; }
+        
+        if(!col) for(int i=0;i<m;i++) matrix[i][0] = 0;
+        if(!row) for(int j=0;j<n;j++) matrix[0][j] = 0;
     }
 };
