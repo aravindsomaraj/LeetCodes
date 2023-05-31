@@ -11,63 +11,30 @@
  */
 class Solution {
 public:
-    void Solve(queue<TreeNode*> fr, vector<vector<int>>& res, bool f)
-    {
-        if(fr.empty())
-            return;
-        
-        queue<TreeNode*> newfr;
-        vector<int> tmp;
-        
-        while(!fr.empty())
-        {
-            TreeNode* curr = fr.front();
-            fr.pop();
-            if(curr->left)
-            {
-                newfr.push(curr->left);
-                tmp.push_back(curr->left->val);
-            }
-            if(curr->right)
-            {
-                newfr.push(curr->right);
-                tmp.push_back(curr->right->val);
-            }
-        }
-        
-        
-        if(!tmp.empty())
-        {
-            if(f==true)
-            {
-                reverse(tmp.begin(),tmp.end());
-            }
-            res.push_back(tmp);
-        }
-        
-        Solve(newfr,res,!f);
-        
-        
-    }
-    
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        
-        vector<vector<int>> res;
-        vector<int> tmp;
-        queue<TreeNode*> newfr;
-        
-        if(root!=NULL)
-        {
-            tmp.push_back(root->val);
-            res.push_back(tmp);
-            newfr.push(root);
+
+        vector<vector<int>>ans;
+        vector<int> res;
+        if(!root) return {};
+
+        int f=0;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode* node=q.front(); q.pop();
+                res.push_back(node->val);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+            }
+            
+            if(f) reverse(res.begin(),res.end());
+            ans.push_back(res);
+            f=!f;
+            res.clear();
         }
-        
-        Solve(newfr,res,true);
-        
-        return res;
-        
-        
-        
+        return ans;
     }
 };
