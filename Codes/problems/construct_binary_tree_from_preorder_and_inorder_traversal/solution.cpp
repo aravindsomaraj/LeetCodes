@@ -11,40 +11,26 @@
  */
 class Solution {
 public:
-    int k;
-    int Find(vector<int>& tr, int x)
+    int i;
+    TreeNode* build(vector<int>& pp, vector<int>& ii, int l, int r)
     {
-        for(int i=0; i<tr.size(); i++)
-        {
-            if(tr[i]==x)
-            {
-                return i;
-            }
-        }
-        return 0;
-    }
-        
-    TreeNode* Solve(vector<int>& preorder, vector<int>& inorder, int l, int r)
-    {
-        cout << k << " ";
-        if(l>r || k>=preorder.size())
+        if(l>r || i==pp.size())
             return NULL;
-        int v = preorder[k];
-        k++;
-        TreeNode* root = new TreeNode(v);
-        
-        int m = Find(inorder,v);
-        root->left = Solve(preorder,inorder,l,m-1);
-        root->right= Solve(preorder,inorder,m+1,r);
-        
+
+        TreeNode* root = new TreeNode(pp[i]);
+
+        int left=l,right=r,mid=0;
+        auto it = find(ii.begin(),ii.end(),pp[i]);
+        mid = distance(ii.begin(),it);
+        i++;
+        root->left = build(pp,ii,left,mid-1);
+        root->right= build(pp,ii,mid+1,right);
+
         return root;
-        
+
     }
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        
-        k=0;
-        TreeNode* root;
-        root=Solve(preorder,inorder,0,inorder.size()-1);
-        return root;
+    TreeNode* buildTree(vector<int>& pp, vector<int>& ii) {
+        i=0;
+        return build(pp,ii,0,ii.size()-1);
     }
 };
