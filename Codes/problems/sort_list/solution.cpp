@@ -10,75 +10,39 @@
  */
 class Solution {
 public:
-    ListNode* mergeList(ListNode* l1, ListNode* l2)
+    ListNode* merge(ListNode* a, ListNode* b)
     {
-        ListNode* ans = new ListNode(0);
-        ListNode* curr = ans;
-
-        while(l1!=0 && l2!=0)
+        if(!a)
+            return b;
+        if(!b)
+            return a;
+        
+        ListNode* curr = 0;
+        if(a->val < b->val)
         {
-            if(l1->val <= l2->val)
-            {
-                curr->next = l1;
-                l1=l1->next;
-            }
-            else
-            {
-                curr->next = l2;
-                l2=l2->next;
-            }
-            curr=curr->next;
+            curr = a; curr->next = merge(a->next,b);
         }
-        while(l1!=0)
+        else
         {
-            curr->next = l1;
-            l1=l1->next;
-            curr=curr->next;
+            curr = b; curr->next = merge(a,b->next);
         }
-        while(l2!=0)
-        {
-            curr->next = l2;
-            l2=l2->next;
-            curr=curr->next;
-        }
-
-        return ans->next;
+        return curr;
     }
     ListNode* sortList(ListNode* head) {
-
-        if(head==0 || head->next==0)
+        
+        if(!head || !head->next)
             return head;
         
-        ListNode* temp = NULL;
-        ListNode* half = head;
-        ListNode* full = head;
-        while(full!=0 && full->next!=0)
+        ListNode *slow = head, *fast = head->next;
+        while(fast && fast->next)
         {
-            temp = half;
-            half = half->next;
-            full = full->next->next;
+            slow = slow->next; fast=fast->next->next;
         }
+        fast = slow->next;
+        slow->next = 0;
+        ListNode* left = sortList(head);
+        ListNode* right = sortList(fast);
 
-        temp->next=NULL;
-        ListNode* l1 = sortList(head);
-        ListNode* l2 = sortList(half);
-
-        return mergeList(l1,l2);
-        
+        return merge(left,right);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
