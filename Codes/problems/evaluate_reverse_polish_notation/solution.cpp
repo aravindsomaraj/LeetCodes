@@ -1,62 +1,25 @@
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-
-        stack<int> num;
         
-        for(int i=0; i<tokens.size(); i++)
+        int ans=0;
+        stack<int> num;
+        for(string& s:tokens)
         {
-            char op = tokens[i][0];
-            cout << op;
-            switch(op)
+            if(isdigit(s[0]) || isdigit(s[1])) num.push(stoi(s));
+            else
             {
-                case '+': {
-                            int m = num.top();
-                            num.pop();
-                            int n = num.top();
-                            num.pop();
-                            num.push(m+n);
-                            break;
-                            }
-                case '-': {
-                            if(tokens[i].size()!=1)
-                            {
-                                num.push(stoi(tokens[i]));
-                            }
-                            else
-                            {
-                                int m = num.top();
-                                num.pop();
-                                int n = num.top();
-                                num.pop();
-                                num.push(n-m);
-                            }
-                            break;
-                            }
-                case '*': {
-                            int m = num.top();
-                            num.pop();
-                            int n = num.top();
-                            num.pop();
-                            num.push(m*n);
-                            break;
-                            }
-                case '/': {
-                            int m = num.top();
-                            num.pop();
-                            int n = num.top();
-                            num.pop();
-                            num.push(n/m);
-                            break;
-                            }
-                default: {
-                            num.push(stoi(tokens[i]));
-
+                int b = num.top(); num.pop();
+                int a = num.top(); num.pop();
+                switch(s[0])
+                {
+                    case '+': num.push(a+b); break;
+                    case '-': num.push(a-b); break;
+                    case '*': num.push(a*b); break;
+                    case '/': num.push(a/b); break;
                 }
             }
         }
-
-        int ans = num.top();
-        return ans;
+        return num.top();
     }
 };
