@@ -1,39 +1,36 @@
 class Solution {
 public:
+    vector<vector<string>> ans;
+    vector<string> res;
+    int n;
     bool isPalin(string& s, int l, int r)
     {
         while(l<r)
         {
-            if(s[l++]!=s[r--])
-                return false;
+            if(s[l++]!=s[r--]) return false;
         }
         return true;
     }
-    void partition(string& s, int start, vector<string>& temp, vector<vector<string>>& ans)
+    void Solve(string& s, int idx)
     {
-        int n = s.size();
-        if(start==n)
+        if(idx==n)
         {
-            ans.push_back(temp);
-            return;
+            ans.push_back(res); return;
         }
 
-        for(int i=start; i<n; i++)
+        for(int i=idx;i<n;i++)
         {
-            if(isPalin(s,start,i))
+            if(isPalin(s,idx,i))
             {
-                temp.push_back(s.substr(start,i-start+1));
-                partition(s,i+1,temp,ans);
-                temp.pop_back();
+                res.push_back(s.substr(idx,i-idx+1));
+                Solve(s,i+1);
+                res.pop_back();
             }
         }
     }
     vector<vector<string>> partition(string s) {
-
-        vector<vector<string>> ans;
-        vector<string> temp;
-        partition(s,0,temp,ans);
+        n = s.size();
+        Solve(s,0);
         return ans;
-        
     }
 };
