@@ -6,19 +6,12 @@ public:
     }
     string largestNumber(vector<int>& nums) {
 
-        vector<string> num;
-        for(int& i: nums)
-        {
-            num.push_back(to_string(i));
-        }
+        vector<string> s;
+        for(int& i:nums) s.push_back(to_string(i));
 
-        sort(num.begin(),num.end(),compare);
-        string res="";
-        for(string& i: num)
-        {
-            res = res + i;
-        }
-        
-        return res[0]=='0'? "0" : res;
+        sort(s.begin(),s.end(),compare);
+        string ans="";
+        for(string& num:s) ans+=num;
+        return ans[0]=='0'?"0":ans;
     }
 };
