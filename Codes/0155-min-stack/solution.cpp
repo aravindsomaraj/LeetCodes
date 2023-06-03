@@ -1,43 +1,32 @@
 class MinStack {
 public:
-    int tops;
-    int arr[30000];
+    int a[(int)6e4];
+    int index,curr_min;
     MinStack() {
-        
-        memset(arr,0,sizeof(arr));
-        tops=-1;
-        
+        fill(a,a+(int)6e4,INT_MAX);
+        index=0;
+        curr_min=INT_MAX;
     }
     
     void push(int val) {
-        
-        arr[++tops] = val;
-        
+        curr_min = min(val,curr_min);
+        a[index]=val;
+        a[index+1]=curr_min;
+        index+=2;
     }
     
     void pop() {
-        
-        tops--;
-        
+        if(index==2) curr_min=INT_MAX;
+        else curr_min = a[index-3];
+        index-=2;
     }
     
     int top() {
-        
-        return arr[tops];
-        
+        return a[index-2];
     }
     
     int getMin() {
-        
-        int mina = INT_MAX;
-        for(int i=0; i<=tops; i++)
-        {
-            if(arr[i]<mina)
-                mina=arr[i];
-        }
-        
-        return mina;
-        
+        return a[index-1];
     }
 };
 
