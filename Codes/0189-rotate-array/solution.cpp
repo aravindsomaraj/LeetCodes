@@ -1,17 +1,9 @@
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
-        
         int n=nums.size();
-        vector<int> numsN (n,0);
-        for(int i=0; i<n; i++)
-        {
-            numsN[(i+k)%n] = nums[i];
-        }
-        nums = numsN;
-        // for(int i=0; i<n; i++)
-        // {
-        //     nums[i] = numsN[i];
-        // }
+        int shifts = n-(k%n);
+        nums.insert(nums.end(),nums.begin(),nums.begin()+shifts);
+        nums.erase(nums.begin(),nums.begin()+shifts);  
     }
 };
