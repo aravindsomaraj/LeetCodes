@@ -1,53 +1,48 @@
 class Trie {
 public:
-    struct Node
-    {
+   struct Node {
         string key;
-        vector<Node*>children;
-        bool leaf;
-        Node(string s): key(s), children(vector<Node*>(26)), leaf(false) {}
+        vector<Node*> children;
+        bool isLeaf;
+        Node(string key) : key(key) , children(vector<Node*>(26,0)) , isLeaf(false) {}
     };
-    Node *root;
-    Trie() {
+    Node* root;
+    Trie()
+    {
         root = new Node("");
     }
-    
-    void insert(string word) {
-        
-        Node *curr = root;
-        for(int i=0;i<word.size();i++)
+    void insert(string s)
+    {
+        Node* curr = root;
+        for(int i=0;i<s.size();i++)
         {
-            char ch = word[i];
-            if(!curr->children[ch-97])
-                curr->children[ch-97] = new Node(string(1,ch));
-            curr = curr->children[ch-97];
+            char ch = s[i];
+            if(!curr->children[ch-'a']) 
+                curr->children[ch-'a'] = new Node(string(1,ch));
+            curr = curr->children[ch-'a'];
         }
-        curr->leaf = true;
+        curr->isLeaf = true;
     }
-    
-    bool search(string word) {
-        Node *curr = root;
-        for(int i=0;i<word.size();i++)
+    bool search(string s)
+    {
+        Node* curr = root;
+        for(int i=0;i<s.size();i++)
         {
-            char ch = word[i];
-            curr=curr->children[ch-97];
-            if(!(curr && (curr->key)[0]==ch))
-                return false;
+            char ch = s[i];
+            if(!curr->children[ch-'a']) return false;
+            curr = curr->children[ch-'a'];
         }
-        if(curr->leaf)
-            return true;
-        else
-            return false;
+        if(curr->isLeaf) return true;
+        return false;
     }
-    
-    bool startsWith(string prefix) {
-        Node *curr = root;
-        for(int i=0;i<prefix.size();i++)
+    bool startsWith(string s)
+    {
+        Node* curr = root;
+        for(int i=0;i<s.size();i++)
         {
-            char ch = prefix[i];
-            curr=curr->children[ch-97];
-            if(!(curr && (curr->key)[0]==ch))
-                return false;
+            char ch = s[i];
+            if(!curr->children[ch-'a']) return false;
+            curr = curr->children[ch-'a'];
         }
         return true;
     }
