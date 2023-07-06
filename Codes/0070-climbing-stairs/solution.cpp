@@ -2,16 +2,15 @@ class Solution {
 public:
     int climbStairs(int n) {
 
-        if(n<=2)
-            return n;
-        vector<int> dp (n,0);
-        dp[n-1]=1;
-        dp[n-2]=2;
+        int A[n+1];
+        for_each(A,A+n+1,[](int& i){ i = -1; });
+        function<int(int)> solve = [&](int i) {
+            if(i<=2) return i;
 
-        for(int i=n-3;i>=0;i--)
-        {
-            dp[i] = dp[i+1] + dp[i+2];
-        }
-        return dp[0];
+            if(A[i]!=-1) return A[i];
+
+            return A[i] = solve(i-1) + solve(i-2);
+        };
+        return solve(n);
     }
 };
