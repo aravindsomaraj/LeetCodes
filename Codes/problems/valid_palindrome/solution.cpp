@@ -1,17 +1,16 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
+        
+        string ans = "";
 
-        string newS="";
-        for(int i=0;i<s.size();i++)
+        for(char& ch:s)
         {
-            if((s[i]>='A' && s[i]<='Z') || (s[i]>='a' && s[i]<='z') || isdigit(s[i]))
-                newS+=tolower(s[i]);
+            if(isdigit(ch) || isalpha(ch))
+                ans += tolower(ch);
         }
-        string temp = newS;
-        reverse(newS.begin(),newS.end());
-        if(temp == newS)
-            return true;
-        return false;
+        int l=0,r=ans.size()-1;
+        while(l<=r) if(ans[l++]!=ans[r--]) return false;
+        return true;
     }
 };
