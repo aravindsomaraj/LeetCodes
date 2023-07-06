@@ -1,37 +1,27 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
-
-        string ab="";
-        int an = a.size();
-        int bn = b.size();
-
-        int aj = an-1;
-        int bj = bn-1;
-        int c=0,p=0,s=0;
-        while(aj>=0 && bj>=0)
+        
+        if(a.size()<b.size())
+            return addBinary(b,a);
+        string ans="";
+        
+        int i=a.size()-1,j=b.size()-1;
+        int sum=0,carry=0;
+        while(i>=0 && j>=0)
         {
-            int ac = a[aj--]-'0';
-            int bc = b[bj--]-'0';
-            ab = to_string((ac^bc)^c) + ab;
-            c = (ac&bc) | ((ac|bc)&c);
-            cout << c << endl;
+            sum = carry ^ (a[i]-'0') ^ (b[j]-'0');
+            carry = (a[i]-'0')&(b[j]-'0') | (b[j]-'0')&carry | (a[i]-'0')&carry;
+            ans = char(sum+'0') + ans;
+            i--,j--;
         }
-        while(aj>=0)
+        while(i>=0)
         {
-            int ac = a[aj--]-'0';
-            ab = to_string(ac^c) + ab;
-            c  = ac&c;
+            sum = carry ^ (a[i]-'0');
+            carry = (a[i]-'0')&carry;
+            ans = char(sum+'0') + ans;
+            i--;
         }
-        while(bj>=0)
-        {
-            int bc = b[bj--]-'0';
-            ab = to_string(bc^c) + ab;
-            c  = bc&c;
-        }
-        if(c!=0)
-            return "1"+ab;
-        else
-            return ab;
+        return carry?'1'+ans : ans;
     }
 };
