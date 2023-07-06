@@ -8,19 +8,15 @@
  */
 class Solution {
 public:
-    bool Solve(ListNode* slow, ListNode* fast)
+    bool solve(ListNode* slow, ListNode* fast)
     {
-        if(slow==fast)
-            return true;
-        if(!fast || !fast->next)
-            return false;
-        return Solve(slow->next,fast->next->next);
-        
+        if(!fast || !(fast->next)) return false;
+        if(fast==slow) return true;
+        return solve(slow->next,fast->next->next);
     }
     bool hasCycle(ListNode *head) {
-        if(!head)
-            return false;
-        return Solve(head,head->next);
-        
+
+        if(!head) return false;
+        return solve(head,head->next);
     }
 };
