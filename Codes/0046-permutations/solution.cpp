@@ -1,22 +1,26 @@
 class Solution {
-public:
-    vector<vector<int>> ans;
-    void Solve(vector<int>& nums, int i)
-    {
-        if(i==nums.size())
-        {
-            ans.push_back(nums);return;
-        }
-        
-        for(int j=i;j<nums.size();j++)
-        {
-            swap(nums[i],nums[j]);
-            Solve(nums,i+1);
-            swap(nums[i],nums[j]);
-        }
-    }
+public: 
     vector<vector<int>> permute(vector<int>& nums) {
-        Solve(nums,0);
+
+        int n = nums.size();
+        vector<vector<int>> ans;
+
+        function<void(int)> permute = [&](int i) {
+            if(i==n)
+            {
+                ans.push_back(nums);
+                return;
+            }
+
+            for(int j=i;j<n;j++)
+            {
+                swap(nums[i],nums[j]);
+                permute(i+1);
+                swap(nums[i],nums[j]);
+            }
+        };
+        
+        permute(0);
         return ans;
     }
 };
