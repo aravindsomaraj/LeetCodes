@@ -1,23 +1,27 @@
 class Solution {
 public:
-    int Solve(vector<int>& nums, vector<int>& pro, int l, int i)
-    {
-        if(i==nums.size()-1)
-        {
-            pro[i]=l;
-            return nums[i];
-        }
-        
-        int giv = Solve(nums,pro,l*nums[i],i+1);
-        pro[i] = l*giv;
-        return nums[i]*giv;
-    }
     vector<int> productExceptSelf(vector<int>& nums) {
 
-        vector<int> pro (nums.size(),0);
-        int p = Solve(nums,pro,1,0);
+        int n = nums.size();
+        int L[n],R[n];
+        L[0] = 1 , R[n-1] = 1;
+        for(int i=1;i<n;i++)
+        {
+            L[i] = L[i-1] * nums[i-1];
+            R[n-1-i] = R[n-i] * nums[n-i];
+        }
+        for(int i=0;i<n;i++) nums[i] = L[i] * R[i];
+        return nums;
+        // vector<int> ans (n);
 
-        return pro;
+        // function<int(int,int)> prod = [&](int left, int i) {
+        //     if(i==n) return 1;
+        //     int right = prod(left*nums[i],i+1);
+        //     ans[i] = left * right;
+        //     return nums[i]*right;
+        // };
         
+        // prod(1,0);
+        // return ans;
     }
 };
