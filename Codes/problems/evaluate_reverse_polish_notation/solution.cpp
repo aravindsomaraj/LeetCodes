@@ -1,25 +1,27 @@
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        
-        int ans=0;
-        stack<int> num;
-        for(string& s:tokens)
+
+        stack<int> st;
+        for(auto& s:tokens)
         {
-            if(isdigit(s[0]) || isdigit(s[1])) num.push(stoi(s));
+            if(isdigit(s[0]) || isdigit(s[1]))
+                st.push(stoi(s));
             else
             {
-                int b = num.top(); num.pop();
-                int a = num.top(); num.pop();
+                int b = st.top(); st.pop();
+                int a = st.top(); st.pop();
+                int num = 0;
                 switch(s[0])
                 {
-                    case '+': num.push(a+b); break;
-                    case '-': num.push(a-b); break;
-                    case '*': num.push(a*b); break;
-                    case '/': num.push(a/b); break;
+                    case '+': num = a+b; break;
+                    case '-': num = a-b; break;
+                    case '*': num = a*b; break;
+                    case '/': num = a/b; break;
                 }
+                st.push(num);
             }
         }
-        return num.top();
+        return st.top();
     }
 };
