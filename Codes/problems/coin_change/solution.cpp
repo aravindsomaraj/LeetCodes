@@ -1,18 +1,16 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        
-        vector<int> dp (amount+1,-1);
-        dp[0]=0;
-
+        vector<int> A (amount+1,-1);
+        A[0] = 0;
         for(int& i:coins)
         {
             for(int j=i;j<=amount;j++)
             {
-                if(dp[j-i]!=-1)
-                    dp[j]=dp[j]==-1? dp[j-i]+1 : min(dp[j-i]+1,dp[j]);
+                if(A[j-i]!=-1)
+                    A[j] = A[j]==-1 ? A[j-i]+1:min(A[j-i]+1,A[j]);
             }
         }
-        return dp[amount];
+        return A[amount];
     }
 };
