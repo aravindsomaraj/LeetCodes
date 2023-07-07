@@ -1,48 +1,45 @@
 class Trie {
 public:
-   struct Node {
-        string key;
-        vector<Node*> children;
+    struct TrieNode {
+        char val;
+        TrieNode *nodes[26];
         bool isLeaf;
-        Node(string key) : key(key) , children(vector<Node*>(26,0)) , isLeaf(false) {}
+        TrieNode(char val) : val(val) , isLeaf(false) {
+            for(int i=0;i<26;i++) nodes[i] = nullptr;
+        }
     };
-    Node* root;
-    Trie()
-    {
-        root = new Node("");
+    TrieNode *root;
+    Trie() {
+        root = new TrieNode('#');
     }
-    void insert(string s)
-    {
-        Node* curr = root;
-        for(int i=0;i<s.size();i++)
+    
+    void insert(string word) {
+        
+        TrieNode *curr = root;
+        for(char& ch:word)
         {
-            char ch = s[i];
-            if(!curr->children[ch-'a']) 
-                curr->children[ch-'a'] = new Node(string(1,ch));
-            curr = curr->children[ch-'a'];
+            if(!curr->nodes[ch-'a']) curr->nodes[ch-'a'] = new TrieNode(ch);
+            curr = curr->nodes[ch-'a'];
         }
         curr->isLeaf = true;
     }
-    bool search(string s)
-    {
-        Node* curr = root;
-        for(int i=0;i<s.size();i++)
+    
+    bool search(string word) {
+        TrieNode *curr = root;
+        for(char& ch:word)
         {
-            char ch = s[i];
-            if(!curr->children[ch-'a']) return false;
-            curr = curr->children[ch-'a'];
+            if(!curr->nodes[ch-'a']) return false;
+            curr = curr->nodes[ch-'a'];
         }
-        if(curr->isLeaf) return true;
-        return false;
+        return curr->isLeaf;
     }
-    bool startsWith(string s)
-    {
-        Node* curr = root;
-        for(int i=0;i<s.size();i++)
+    
+    bool startsWith(string prefix) {
+        TrieNode *curr = root;
+        for(char& ch:prefix)
         {
-            char ch = s[i];
-            if(!curr->children[ch-'a']) return false;
-            curr = curr->children[ch-'a'];
+            if(!curr->nodes[ch-'a']) return false;
+            curr = curr->nodes[ch-'a'];
         }
         return true;
     }
