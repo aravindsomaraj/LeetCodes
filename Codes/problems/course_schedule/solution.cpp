@@ -1,35 +1,29 @@
 class Solution {
 public:
-    vector<list<int>> v;
-    bool checkCycle(vector<int>& visited, int node)
-    {
-        for(int& i:v[node])
-        {
-            if(visited[i]==1) return true;
-            if(visited[i]==2) continue;
-            visited[i]=1;
-            if(checkCycle(visited,i))
-                return true;
-            visited[i]=2;
-        }
-        return false;
-    }
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    bool canFinish(int N, vector<vector<int>>& P) {
+        
+        vector<vector<int>> V (N);
+        vector<int> visited (N);
+        for(auto& v:P) V[v[0]].push_back(v[1]);
 
-        v = vector<list<int>>(numCourses);
-
-        for(auto& i:prerequisites)
+        function<bool(int)> hasCycle = [&](int cur) {
+            for(auto& v:V[cur])
+            {
+                if(visited[v]==1) return true;
+                if(visited[v]==2) continue;
+                visited[v]=1;
+                if(hasCycle(v)) return true;
+                visited[v]=2;
+            }
+            return false;
+        };
+        for(int i=0;i<N;i++)
         {
-            v[i[0]].push_back(i[1]);
+            visited[i] = 1;
+            if(hasCycle(i)) return false; ;
+            visited[i] = 2;
         }
-        vector<int> visited (numCourses,0);
 
-        for(int i=0;i<numCourses;i++)
-        {
-            visited[i]=1;
-            if(checkCycle(visited,i)) return false;
-            visited[i]=2;
-        }
         return true;
     }
 };
