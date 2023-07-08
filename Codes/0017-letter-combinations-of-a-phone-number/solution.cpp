@@ -1,26 +1,18 @@
 class Solution {
 public:
     unordered_map<char,string> mp;
-    vector<string> Solve(string s,int i)
+    vector<string> solve(string s, int i)
     {
-        if(i==s.size()-1)
-        {
-            vector<string> v;
-            for(char& ch:mp[s[i]])
-                v.push_back(string(1,ch));
-            return v;
-        }
+        if(i==s.size()) return {""};
 
-        vector<string> temp = Solve(s,i+1);
-        vector<string> res;
-        for(char& ch:mp[s[i]])
-                res.push_back(string(1,ch));
+        vector<string> temp = solve(s,i+1);
+        string res = mp[s[i]];
         vector<string> ans;
-        for(int i=0;i<temp.size();i++)
+        for(int i=0;i<res.size();i++)
         {
-            for(int j=0;j<res.size();j++)
+            for(int j=0;j<temp.size();j++)
             {
-                ans.push_back(res[j]+temp[i]);
+                ans.push_back(res[i]+temp[j]);
             }
         }
         return ans;
@@ -37,6 +29,6 @@ public:
         mp['7']="pqrs";
         mp['8']="tuv";
         mp['9']="wxyz";
-        return Solve(digits,0);
+        return solve(digits,0);
     }
 };
