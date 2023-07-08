@@ -1,35 +1,34 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        
-        if (s.size() == 0 || t.size() == 0) return "";
-        vector<int> remaining(128, 0);
-        int required = t.size();
-        for (int i = 0; i < required; i++) 
-            remaining[t[i]]++;
-        int min = INT_MAX, start = 0, left = 0, i = 0;
 
-        while( i<= s.size() && start < s.size()) 
+        if (s.size() == 0 || t.size() == 0) return "";
+        int start=0,end=0,n=s.size(),min=INT_MAX,posn=0;
+        vector<int> remaining(128, 0);
+        int target=t.size();
+        for(auto& ch:t) remaining[ch]++;
+
+        while(end<=n && start<n)
         {
-            if(required)
+            if(target)
             {
-                if(i==s.size()) break;
-                remaining[s[i]]--;
-                if(remaining[s[i]]>=0) required--;
-                i++;
+                if(end==n) break;
+                remaining[s[end]]--;
+                if(remaining[s[end]]>=0) target--;
+                end++;
             }
             else
             {
-                if(i-start < min)
+                if(end-start < min)
                 {
-                    min=i-start;
-                    left=start;
+                    min = end-start;
+                    posn = start;
                 }
                 remaining[s[start]]++;
-                if(remaining[s[start]]>0) required++;
+                if(remaining[s[start]]>0) target++;
                 start++;
             }
         }
-        return min == INT_MAX? "" : s.substr(left,min);
+        return min == INT_MAX? "" : s.substr(posn,min);
     }
 };
