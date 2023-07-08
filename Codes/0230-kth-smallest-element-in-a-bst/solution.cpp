@@ -9,33 +9,34 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+class Tree {
+public:
+    int val,count;
+    Tree *left,*right;
+    Tree(int x) : val(x), count(1), left(nullptr), right(nullptr) {}
+};
 class Solution {
 public:
-    struct newTreeNode {
-        int val;
-        int count;
-        newTreeNode *left;
-        newTreeNode *right;
-        newTreeNode(int x) : val(x) , count(1) {}
-    };
-    newTreeNode* T;
-    int helper(newTreeNode* tRoot, int k){
-        int leftCount = (tRoot->left == NULL)? 0 : tRoot->left->count;
-        if(k == leftCount + 1) return tRoot->val;
-        else if (k > leftCount + 1) return helper(tRoot->right, k - leftCount - 1);
-        else return helper(tRoot->left, k);
+    int helper(Tree* root, int k)
+    {
+        int leftcount = root->left? root->left->count : 0;
+        if(k == leftcount+1) return root->val;
+        else if(k > leftcount+1) return helper(root->right,k-leftcount-1);
+        else return helper(root->left,k);
     }
-    newTreeNode* buildtTree(TreeNode* root){
-        if(root == NULL) return NULL;
-        newTreeNode* tNode = new newTreeNode(root->val);
-        tNode->left = buildtTree(root->left);
-        tNode->right = buildtTree(root->right);
-        tNode->count +=  (tNode->left == NULL)? 0 : tNode->left->count;
-        tNode->count +=  (tNode->right == NULL)? 0 : tNode->right->count;
-        return tNode;
+    Tree* buildTree(TreeNode* root)
+    {
+        if(!root) return nullptr;
+        Tree* nRoot = new Tree(root->val);
+        nRoot->left = buildTree(root->left);
+        nRoot->right = buildTree(root->right);
+        nRoot->count += nRoot->left? nRoot->left->count : 0;
+        nRoot->count += nRoot->right? nRoot->right->count : 0;
+        return nRoot;
     }
     int kthSmallest(TreeNode* root, int k) {
-        T = buildtTree(root);
-        return helper(T, k);
+        
+        Tree* newRoot = buildTree(root);
+        return helper(newRoot,k);
     }
 };
