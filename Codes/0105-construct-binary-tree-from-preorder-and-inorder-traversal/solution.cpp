@@ -12,25 +12,21 @@
 class Solution {
 public:
     int i;
-    TreeNode* build(vector<int>& pp, vector<int>& ii, int l, int r)
+    TreeNode* build(vector<int>& P, vector<int>& I, int l, int r)
     {
-        if(l>r || i==pp.size())
-            return NULL;
+        if(l>r || i==P.size()) return NULL;
 
-        TreeNode* root = new TreeNode(pp[i]);
+        int val = P[i++];
+        TreeNode* root = new TreeNode(val);
 
-        int left=l,right=r,mid=0;
-        auto it = find(ii.begin(),ii.end(),pp[i]);
-        mid = distance(ii.begin(),it);
-        i++;
-        root->left = build(pp,ii,left,mid-1);
-        root->right= build(pp,ii,mid+1,right);
-
+        auto it = find(I.begin(),I.end(),val);
+        int mid = distance(I.begin(),it);
+        root->left = build(P,I,l,mid-1);
+        root->right = build(P,I,mid+1,r);
         return root;
-
     }
-    TreeNode* buildTree(vector<int>& pp, vector<int>& ii) {
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         i=0;
-        return build(pp,ii,0,ii.size()-1);
+        return build(preorder,inorder,0,inorder.size()-1);
     }
 };
