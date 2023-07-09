@@ -8,53 +8,41 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
 class Solution {
 public:
-    ListNode* merge(ListNode* l1, ListNode* l2)
+    ListNode* merge(ListNode* a, ListNode* b)
     {
-        ListNode* ans=NULL;
-        if(l1==0)
-            return l2;
-        if(l2==0)
-            return l1;
-        
-        if(l1->val <= l2->val)
+        if(a==nullptr) return b;
+        if(b==nullptr) return a;
+
+        if(a->val < b->val)
         {
-            ans=l1;
-            ans->next=merge(l1->next,l2);
+            a->next = merge(a->next,b);
+            return a;
         }
         else
         {
-            ans=l2;
-            ans->next=merge(l1,l2->next);
+            b->next = merge(a,b->next);
+            return b;
         }
-        return ans;
     }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
+        
+        int n = lists.size();
 
-        int k=lists.size();
-        if(k==0)
-            return NULL;
-        int start=0;
-        int end=k-1;
-        int temp;
-        while(end!=0)
+        int start = 0, end = n-1, temp = 0;
+        while(end>0)
         {
-            start=0;
-            temp=end;
-            while(start<temp)
+            start = 0;
+            temp = end;
+            while(start < temp)
             {
-                lists[start]=merge(lists[start],lists[temp]);
-                start++;
-                temp--;
+                lists[start] = merge(lists[start],lists[temp]);
+                start++; temp--;
 
-                if(start>=temp)
-                    end=temp;
+                if(start >= temp) end = temp;
             }
-            
         }
-
-        return lists[0];
+        return n==0? nullptr:lists[0];
     }
 };
