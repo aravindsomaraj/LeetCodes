@@ -11,20 +11,20 @@
  */
 class Solution {
 public:
-    vector<int> a;
-    void Solve(TreeNode* root)
-    {
-        if(!root)
-            return;
-        
-        Solve(root->left);
-        a.push_back(root->val);
-        Solve(root->right);
-    }
     vector<int> inorderTraversal(TreeNode* root) {
 
-        Solve(root);
-        return a;
-        
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+
+        vector<int> ans;
+        function<void(TreeNode*)> inorder = [&](TreeNode* root) {
+            if(!root) return;
+
+            inorder(root->left);
+            ans.push_back(root->val);
+            inorder(root->right);
+        };
+        inorder(root);
+        return ans;
     }
 };
