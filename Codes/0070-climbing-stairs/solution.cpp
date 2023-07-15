@@ -1,16 +1,13 @@
 class Solution {
 public:
+    int memo(int n,vector<int>& dp)
+    {
+        if(n<=2) return n;
+        if(dp[n]!=-1) return dp[n];
+        return dp[n]=memo(n-1,dp)+memo(n-2,dp);
+    }
     int climbStairs(int n) {
-
-        int A[n+1];
-        for_each(A,A+n+1,[](int& i){ i = -1; });
-        function<int(int)> solve = [&](int i) {
-            if(i<=2) return i;
-
-            if(A[i]!=-1) return A[i];
-
-            return A[i] = solve(i-1) + solve(i-2);
-        };
-        return solve(n);
+        vector<int> dp (n+1,-1);
+        return memo(n,dp);
     }
 };
