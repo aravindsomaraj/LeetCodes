@@ -1,19 +1,22 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-
-        int buy1 = -prices[0];          // like current buy -
-        int sell1= buy1 + prices[0];                 // sell pair
-        int buy2 = sell1 - prices[0];   // like overall buy -
-        int sell2= buy2 + prices[0];                // sell pair
-
+        int k=2;
+        vector<pair<int,int>> v (k,{0,0});
+        for(auto& i:v) i.first = -prices[0];
+        int maxs = 0;
         for(int& i:prices)
         {
-            buy1 = max(buy1,-i);
-            sell1= max(sell1,buy1+i);
-            buy2 = max(buy2,sell1-i);
-            sell2= max(sell2,buy2+i);
+            v[0].first = max(v[0].first,-i);
+            v[0].second = max(v[0].second,v[0].first+i);
+            for(int j=1;j<k;j++)
+            {
+                v[j].first = max(v[j].first,v[j-1].second-i);
+                v[j].second = max(v[0].second,v[j].first+i);
+                maxs = max(maxs,v[j].second);
+            }
+            maxs = max(maxs,v[0].second);
         }
-        return max(sell1,sell2);
+        return maxs;
     }
 };
