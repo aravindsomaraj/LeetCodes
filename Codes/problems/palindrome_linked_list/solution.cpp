@@ -11,17 +11,21 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        deque<int> d;
-        while(head)
-        {
-            d.push_back(head->val);
-            head=head->next;
+
+        ListNode *slow = head, *fast = head;
+        stack<ListNode*> st;
+        while(fast && fast->next)
+        { 
+            st.push(slow); 
+            slow = slow->next; 
+            fast = fast->next->next;
         }
-        while(!d.empty() && d.front()==d.back())
+        if(fast) st.push(slow); 
+        while(!st.empty() && st.top()->val==slow->val)
         {
-            d.pop_front();
-            if(!d.empty()) d.pop_back();
+            slow = slow->next;
+            st.pop();
         }
-        return d.empty();
+        return st.empty()&&!slow;
     }
 };
