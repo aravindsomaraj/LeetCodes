@@ -2,18 +2,15 @@ class Solution {
 public:
     int New(int n)
     {
-        int new_n = 0;
-        while(n!=0)
+        int ans=0;
+        while(n)
         {
-            new_n += pow(n%10,2);
-            n /= 10;
+            ans += pow(n%10,2);
+            n/=10;
         }
-        return new_n;
+        return ans;
     }
     bool isHappy(int n) {
-
-        if(n==1)
-            return true;
         
         int slow = n, fast = New(n);
         while(slow!=fast)
@@ -21,6 +18,6 @@ public:
             slow = New(slow);
             fast = New(New(fast));
         }
-        return slow == 1;
+        return slow==1;
     }
 };
