@@ -1,12 +1,21 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        
-        for(long i=0;;i++)
-        {
-            if((i*i)>x)
-                return (int)(i-1);
+        if (x == 0)
+            return x;
+        int first = 1, last = x;
+        while (first <= last) {
+            int mid = first + (last - first) / 2;
+            // mid * mid == x gives runtime error
+            if (mid  == x / mid)
+                return mid;
+            else if (mid > x / mid) {
+                last = mid - 1;
+            }
+            else {
+                first = mid + 1;
+            }
         }
-        return 0;
+        return last;
     }
 };
