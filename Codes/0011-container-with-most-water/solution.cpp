@@ -8,7 +8,9 @@ public:
         {
             int h = min(height[l],height[r]);
             area = max(area,(r-l)*h);
+
             while(height[l]<=h && l<r) l++;
+            
             while(height[r]<=h && l<r) r--;
         }
         return area;
