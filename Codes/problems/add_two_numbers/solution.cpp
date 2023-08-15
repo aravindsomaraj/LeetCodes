@@ -10,33 +10,23 @@
  */
 class Solution {
 public:
-    int carry=0,sum=0;
-    ListNode* Solve(ListNode* p, ListNode* q)
-    {
-        if(p&&q)
-        {    sum = p->val + q->val; p=p->next;q=q->next;}
-        else if(p)
-        {    sum = p->val;p=p->next;}
-        else if(q)
-        {    sum = q->val;q=q->next;}
-        else
-        {
-            if(carry)
-                return new ListNode(1);
-            else
-                return NULL;
-        }
-        sum += carry;
-        carry = sum/10;
-        sum = sum%10;
-
-        ListNode* x = new ListNode(sum);
-        sum = 0;
-        x->next = Solve(p,q);
-        return x;
-
-    }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        return Solve(l1,l2);
+
+        ListNode* ans = new ListNode(0);
+        ListNode* curr = ans;
+        int sum = 0, carry = 0;
+        while(l1 || l2)
+        {
+            if(l1) sum += l1->val , l1=l1->next;
+            if(l2) sum += l2->val , l2=l2->next;
+            sum += carry;
+            carry = sum/10;
+            curr->next = new ListNode(sum%10);
+            curr = curr->next;
+            sum = 0;
+        }
+        if(carry)
+            curr->next = new ListNode(1);
+        return ans->next;
     }
 };
