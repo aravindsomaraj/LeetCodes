@@ -12,19 +12,32 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-
-        std::ios_base::sync_with_stdio(false);
-        std::cin.tie(NULL);
-
+        TreeNode* curr = root;
+        stack<TreeNode*> st;
         vector<int> ans;
-        function<void(TreeNode*)> inorder = [&](TreeNode* root) {
-            if(!root) return;
+        while(curr || !st.empty())
+        {
+            while(curr)
+            {
+                st.push(curr);
+                curr = curr->left;
+            }
+            curr = st.top(); st.pop();
+            ans.push_back(curr->val);
+            curr = curr->right;
+        }
+        // std::ios_base::sync_with_stdio(false);
+        // std::cin.tie(NULL);
 
-            inorder(root->left);
-            ans.push_back(root->val);
-            inorder(root->right);
-        };
-        inorder(root);
+        // vector<int> ans;
+        // function<void(TreeNode*)> inorder = [&](TreeNode* root) {
+        //     if(!root) return;
+
+        //     inorder(root->left);
+        //     ans.push_back(root->val);
+        //     inorder(root->right);
+        // };
+        // inorder(root);
         return ans;
     }
 };
