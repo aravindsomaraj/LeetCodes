@@ -6,7 +6,7 @@ public:
 
         for(char& ch:s)
         {
-            if(isdigit(ch) || isalpha(ch))
+            if(isalnum(ch))
                 ans += tolower(ch);
         }
         int l=0,r=ans.size()-1;
