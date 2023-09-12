@@ -8,15 +8,19 @@
  */
 class Solution {
 public:
-    bool solve(ListNode* slow, ListNode* fast)
-    {
-        if(!fast || !(fast->next)) return false;
-        if(fast==slow) return true;
-        return solve(slow->next,fast->next->next);
-    }
+    set<ListNode*> st;
     bool hasCycle(ListNode *head) {
 
-        if(!head) return false;
-        return solve(head,head->next);
+        ListNode* curr = head;
+        ListNode* temp;
+        while(curr)
+        {
+            if(st.count(curr)) return true;
+            st.insert(curr);
+            temp = curr;
+            curr = curr->next;
+            temp->next = NULL;
+        }
+        return false;
     }
 };
