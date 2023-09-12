@@ -12,21 +12,21 @@ class Solution {
 public:
     ListNode* merge(ListNode* a, ListNode* b)
     {
-        if(!a)
-            return b;
-        if(!b)
-            return a;
-        
-        ListNode* curr = 0;
-        if(a->val < b->val)
+        if(a && b)
         {
-            curr = a; curr->next = merge(a->next,b);
+            if(a->val < b->val)
+            {
+                a->next = merge(a->next,b);
+                return a;
+            }
+            else
+            {
+                b->next = merge(a,b->next);
+                return b;
+            }
         }
-        else
-        {
-            curr = b; curr->next = merge(a,b->next);
-        }
-        return curr;
+        else if(a)  return a;
+        return b;
     }
     ListNode* sortList(ListNode* head) {
         
